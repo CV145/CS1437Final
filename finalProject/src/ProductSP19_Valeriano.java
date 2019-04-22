@@ -9,7 +9,6 @@ public class ProductSP19_Valeriano {
 	final float _191Cost = 12.99f;
 	final float _192Cost = 14.99f;
 	final float _193Cost = 15.99f;
-	Calendar calendar = Calendar.getInstance();
 	
 	//constructor initializes # of units sold
 	public ProductSP19_Valeriano(int _191Sales, int _192Sales, int _193Sales)
@@ -53,10 +52,10 @@ public class ProductSP19_Valeriano {
 		return payment - CalculateTotal();
 	}
 	
-	//Output a line to a file for a day, either create or look for file
+	//Output a line to a file for a day
 	private void outputToDayFile(File dayFile)
 	{
-		
+		//get last two numbers from dayFile.getName() for transaction #?
 	}
 	
 	//Output a line to a file for a month
@@ -67,6 +66,27 @@ public class ProductSP19_Valeriano {
 	
 	//Output a line to a file for a year
 	private void outputToYearFile(File yearFile)
+	{
+		
+	}
+	
+	
+	//Methods for displaying reports quickly
+	private void displayDayReport()
+	{
+		
+	}
+	private void displayMonthReport()
+	{
+		
+	}
+	private void displayYearReport()
+	{
+		
+	}
+	
+	//Method prints out a receipt
+	private void printReceipt()
 	{
 		
 	}
