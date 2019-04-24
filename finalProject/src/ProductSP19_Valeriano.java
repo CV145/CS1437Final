@@ -53,41 +53,118 @@ public class ProductSP19_Valeriano {
 	}
 	
 	//Output a line to a file for a day
-	private void outputToDayFile(File dayFile)
+	public void outputToDayFile(String fileName, String transactionNum)
 	{
-		//get last two numbers from dayFile.getName() for transaction #?
+		String lineOutput;
+		FileWriter dayFile; //does this create a new file?
+		PrintWriter printWriter = null;
+		
+		try {
+		dayFile = new FileWriter(fileName, true);
+		printWriter = new PrintWriter(dayFile);
+		}
+		catch (IOException io)
+		{
+			print("IO exception when initializing print and file writers");
+		}
+		
+		lineOutput = String.format("%-10s %-7d %-7d %-7d", transactionNum, _191UnitsSold, _192UnitsSold, _193UnitsSold);
+		printWriter.println(lineOutput);
+		
 	}
 	
 	//Output a line to a file for a month
-	private void outputToMonthFile(File monthFile)
+	public void outputToMonthFile(String fileName, String day)
 	{
+		String lineOutput;
+		FileWriter monthFile; //does this create a new file?
+		PrintWriter printWriter = null;
 		
+		try {
+		monthFile = new FileWriter(fileName, true);
+		printWriter = new PrintWriter(monthFile);
+		}
+		catch (IOException io)
+		{
+			print("IO exception when initializing print and file writers");
+		}
+		
+		lineOutput = String.format("%-10s %-7d %-7d %-7d", day, _191UnitsSold, _192UnitsSold, _193UnitsSold);
+		printWriter.println(lineOutput);
 	}
 	
 	//Output a line to a file for a year
-	private void outputToYearFile(File yearFile)
+	public void outputToYearFile(String fileName, String month)
 	{
+		String lineOutput;
+		FileWriter yearFile; //does this create a new file?
+		PrintWriter printWriter = null;
 		
+		try {
+		yearFile = new FileWriter(fileName, true);
+		printWriter = new PrintWriter(yearFile);
+		}
+		catch (IOException io)
+		{
+			print("IO exception when initializing print and file writers");
+		}
+		
+		lineOutput = String.format("%-10s %-7d %-7d %-7d", month, _191UnitsSold, _192UnitsSold, _193UnitsSold);
+		printWriter.println(lineOutput);
 	}
 	
 	
-	//Methods for displaying reports quickly
-	private void displayDayReport()
+	//Method for displaying report
+	public void displayReport(String date)
 	{
+		System.out.printf("%6s%s\n", "SALE SP19 PRODUCTS-", date);
 		
-	}
-	private void displayMonthReport()
-	{
+		System.out.printf("%s   %d   %f\n", "Model SP191 (12.99/per unit)", _191UnitsSold, Calculate191Earnings());
 		
-	}
-	private void displayYearReport()
-	{
+		System.out.printf("%s   %d   %f\n", "Model SP192 (14.99/per unit)", _192UnitsSold, Calculate192Earnings());
 		
+		System.out.printf("%s   %d   %f\n\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
+		
+		print(".............................................");
+		print("Sub total:");
+		System.out.printf("%45f\n", CalculateSubTotal());
+		print("Tax(8.25%)");
+		System.out.printf("%45f", CalculateTax());
+		print("Total:");
+		System.out.printf("%45f", CalculateTotal());
 	}
+
 	
 	//Method prints out a receipt
-	private void printReceipt()
+	public void printReceipt(String currentDate, String transactionNum, float amountPaid)
 	{
-		
+		print(".............................................");
+		System.out.printf("%7s\n", "RECEIPT - SALE SP19 PRODUCT");
+		print(".............................................");
+		print("Date:");
+		System.out.printf("%45s\n", currentDate);
+		print("Sale transaction:");
+		System.out.printf("%45s\n", transactionNum);
+		print(".............................................");
+		System.out.printf("%s %5s %10s\n", "Model SP191 (12.99/per unit)", _191UnitsSold, Calculate191Earnings());
+		System.out.printf("%s %5s %10s\n", "Model SP192 (14.99/per unit)", _192UnitsSold, Calculate192Earnings());
+		System.out.printf("%s %5s %10s\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
+		print(".............................................");
+		print("Sub total:");
+		System.out.printf("%45f\n", CalculateSubTotal());
+		print("Tax(8.25%)");
+		System.out.printf("%45f", CalculateTax());
+		print("Total:");
+		System.out.printf("%45f", CalculateTotal());
+		print("Amount paid:");
+		System.out.printf("%45f", amountPaid);
+		print("Balance:");
+		System.out.printf("%45f", CalculateBalance(amountPaid));
+	}
+	
+	//print method
+	private void print(String output)
+	{
+		System.out.println(output);
 	}
 }
