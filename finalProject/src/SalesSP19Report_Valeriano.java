@@ -13,7 +13,9 @@ public class SalesSP19Report_Valeriano {
 	private static String dateString;
 	private static ProductSP19_Valeriano instance;
 	private static int transactionNum = 1;
+	private static int day;
 	
+	//getting errors here, must debug to fix them
 	public static void main(String[] args) {
 	    calendar = Calendar.getInstance();
 		simpleDateFormat = new SimpleDateFormat("dd");
@@ -30,6 +32,7 @@ public class SalesSP19Report_Valeriano {
 		int input;
 		do
 		{
+			day = Integer.parseInt(simpleDateFormat.format(currentDate));
 			displayMenu();
 			input = kbd.nextInt();
 			switch(input)
@@ -66,13 +69,21 @@ public class SalesSP19Report_Valeriano {
 	}
 	
 	//method used to make a transaction
+	//first check if it's still the same day, if not then update the day to today and reset the transaction number
+	//ask user for input to gather information, create an instance of data type class, then pass the information to it and call methods for printing receipt and outputting to file
 	private static void saleProduct()
 	{
 		int sp191, sp192, sp193;
 		float amountPaid;
 		String transactionString;
-		int day = Integer.parseInt(simpleDateFormat.format(currentDate));
+		String fileName;
 		
+		if (day != Integer.parseInt(simpleDateFormat.format(currentDate)))
+		{
+			day = Integer.parseInt(simpleDateFormat.format(currentDate));
+			transactionNum = 1;
+		}
+
 		print("-- Sale Product Transaction --");
 		print("How many SP191 units were bought?");
 		sp191 = inputStringAndConvertToInt();
@@ -84,11 +95,12 @@ public class SalesSP19Report_Valeriano {
 		amountPaid = inputStringAndConvertToFloat();
 		
 		instance = new ProductSP19_Valeriano(sp191, sp192, sp193);
-		
 		transactionString = String.format("%d%04d", day, transactionNum);
-		
 		instance.printReceipt(dateString, transactionString, amountPaid);
 		
+		SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyymmdd");
+		fileName = "DaySale_" + fileDateFormat.format(currentDate) + ".txt";
+		instance.outputToDayFile(fileName, transactionString);
 		
 		transactionNum++;
 	}
