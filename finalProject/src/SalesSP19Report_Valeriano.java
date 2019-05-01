@@ -18,9 +18,11 @@ public class SalesSP19Report_Valeriano {
 	//getting errors here, must debug to fix them
 	public static void main(String[] args) {
 	    calendar = Calendar.getInstance();
+	    currentDate = new Date(); //instantiate Date object with no args.. sets to current date
+	    calendar.setTime(currentDate); //calendar needs a date object to set time
 		simpleDateFormat = new SimpleDateFormat("dd");
 		dateFormat = DateFormat.getInstance();
-		dateString = dateFormat.format(currentDate);
+		dateString = dateFormat.format(currentDate); //DateFormat.format(date) returns a string
 		
 		kbd = new Scanner(System.in);
 		menuLoop();

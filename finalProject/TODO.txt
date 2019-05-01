@@ -1,0 +1,23 @@
+TODO:
+- open file as soon as it is written to
+
+import java.awt.Desktop;
+
+if (!Desktop.isDesktopSupported()) {
+println("unable to automatically open file");
+}
+else {
+Desktop desktop = Desktop.getDesktop();
+if (file.exists()) { desktop.open(file); }
+}
+
+if (fileDirectory != null) { println("The directory for the file is: " + fileDirectory); }
+
+---
+String fileDirectory = null;
+fileDirectory = file.getPath();
+
+
+- add a 0 before day if it is below 10 before adding to transaction number
+- format to 2 decimal places
+- project needs to save between uses and probably have a "factory reset" button

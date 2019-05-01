@@ -1,0 +1,9 @@
+code needs to be kept separate, each  class needs to be able to be reused/recycled for various purposes
+
+
+Method for writing a line to a file...
+public void AppendLineToFile(String lineToAppend, String fileName) {}
+- takes in a string which is the line to output to the file
+- takes in another string for the name of the file
+- checks if a file with the given file name already exists, if not create a new file
+- writes to the file and when finished, opens it using Desktop class

@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.awt.Desktop;
 
 //data type class
 public class ProductSP19_Valeriano {
@@ -52,7 +53,55 @@ public class ProductSP19_Valeriano {
 		return payment - CalculateTotal();
 	}
 	
-	//Output a line to a file for a day
+	//method writes a line to a file
+	public void AppendLineToFile(String lineToAppend, String fileName)
+	{
+		File file = new File(fileName); //create an instance of File class
+		FileWriter fileWriter = null;
+		PrintWriter printWriter = null;
+		
+		if (!file.exists())
+		{
+			try { file.createNewFile(); }
+			catch (IOException e) { println("there was an error creating the file: " + fileName + " \n " + "maybe it already exists?"); }
+		}
+		
+		try { fileWriter = new FileWriter(file, true); } //append to file
+		catch(IOException e) { println("there was an error creating a FileWriter for " + file.getName()); }
+		
+		//PrintWriter(FileWriter) works because FileWriter inherits OutputStreamWriter
+		//PrintWriter needs an OutputStream class to write to
+		printWriter = new PrintWriter(fileWriter);
+		printWriter.println(lineToAppend);
+		
+		openFileOnDesktop(file);
+
+		outputFileDirectory(file);
+		
+		printWriter.close();
+	}
+
+	//method tries to automatically open a file
+	private void openFileOnDesktop(File file) {
+		Desktop desktop;
+		if (!Desktop.isDesktopSupported())
+		{ println("Desktop class not supported"); }
+		else  
+		{ 
+			desktop = Desktop.getDesktop();
+			  if (file.exists()) { try {desktop.open(file);} catch(IOException e) { println("unable to open file using Desktop class"); }
+			}
+		}
+	}
+
+	//look for and print the directory of where a file is located
+	private void outputFileDirectory(File file) {
+		String fileDirectory;
+		fileDirectory = file.getAbsolutePath();
+		if (fileDirectory != null) { println("The directory for the file is: " + fileDirectory); }
+	}
+	
+	/*//Output a line to a file for a day
 	public void outputToDayFile(String fileName, String transactionNum)
 	{
 		String lineOutput;
@@ -65,7 +114,7 @@ public class ProductSP19_Valeriano {
 		}
 		catch (IOException io)
 		{
-			print("IO exception when initializing print and file writers");
+			println("IO exception when initializing print and file writers");
 		}
 		
 		lineOutput = String.format("%-10s %-7d %-7d %-7d", transactionNum, _191UnitsSold, _192UnitsSold, _193UnitsSold);
@@ -86,7 +135,7 @@ public class ProductSP19_Valeriano {
 		}
 		catch (IOException io)
 		{
-			print("IO exception when initializing print and file writers");
+			println("IO exception when initializing print and file writers");
 		}
 		
 		lineOutput = String.format("%-10s %-7d %-7d %-7d", day, _191UnitsSold, _192UnitsSold, _193UnitsSold);
@@ -106,12 +155,12 @@ public class ProductSP19_Valeriano {
 		}
 		catch (IOException io)
 		{
-			print("IO exception when initializing print and file writers");
+			println("IO exception when initializing print and file writers");
 		}
 		
 		lineOutput = String.format("%-10s %-7d %-7d %-7d", month, _191UnitsSold, _192UnitsSold, _193UnitsSold);
 		printWriter.println(lineOutput);
-	}
+	}*/
 	
 	
 	//Method for displaying report
@@ -125,12 +174,12 @@ public class ProductSP19_Valeriano {
 		
 		System.out.printf("%s   %d   %f\n\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
 		
-		print(".............................................");
-		print("Sub total:");
+		println(".............................................");
+		println("Sub total:");
 		System.out.printf("%45f\n", CalculateSubTotal());
-		print("Tax(8.25%)");
+		println("Tax(8.25%)");
 		System.out.printf("%45f", CalculateTax());
-		print("Total:");
+		println("Total:");
 		System.out.printf("%45f", CalculateTotal());
 	}
 
@@ -138,32 +187,32 @@ public class ProductSP19_Valeriano {
 	//Method prints out a receipt
 	public void printReceipt(String currentDate, String transactionNum, float amountPaid)
 	{
-		print(".............................................");
+		println(".............................................");
 		System.out.printf("%7s\n", "RECEIPT - SALE SP19 PRODUCT");
-		print(".............................................");
-		print("Date:");
+		println(".............................................");
+		println("Date:");
 		System.out.printf("%45s\n", currentDate);
-		print("Sale transaction:");
+		println("Sale transaction:");
 		System.out.printf("%45s\n", transactionNum);
-		print(".............................................");
+		println(".............................................");
 		System.out.printf("%s %5s %10s\n", "Model SP191 (12.99/per unit)", _191UnitsSold, Calculate191Earnings());
 		System.out.printf("%s %5s %10s\n", "Model SP192 (14.99/per unit)", _192UnitsSold, Calculate192Earnings());
 		System.out.printf("%s %5s %10s\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
-		print(".............................................");
-		print("Sub total:");
+		println(".............................................");
+		println("Sub total:");
 		System.out.printf("%45f\n", CalculateSubTotal());
-		print("Tax(8.25%)");
-		System.out.printf("%45f", CalculateTax());
-		print("Total:");
-		System.out.printf("%45f", CalculateTotal());
-		print("Amount paid:");
-		System.out.printf("%45f", amountPaid);
-		print("Balance:");
-		System.out.printf("%45f", CalculateBalance(amountPaid));
+		println("Tax(8.25%)");
+		System.out.printf("%45f\n", CalculateTax());
+		println("Total:");
+		System.out.printf("%45f\n", CalculateTotal());
+		println("Amount paid:");
+		System.out.printf("%45f\n", amountPaid);
+		println("Balance:");
+		System.out.printf("%45f\n", CalculateBalance(amountPaid));
 	}
 	
 	//print method
-	private void print(String output)
+	private void println(String output)
 	{
 		System.out.println(output);
 	}
