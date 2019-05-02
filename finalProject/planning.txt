@@ -7,3 +7,34 @@ public void AppendLineToFile(String lineToAppend, String fileName) {}
 - takes in another string for the name of the file
 - checks if a file with the given file name already exists, if not create a new file
 - writes to the file and when finished, opens it using Desktop class
+
+---
+todo:
+- create the line to append to
+- create a proper file name
+
+DaySale_20195701
+yyyy = 2019
+mm = 57? should be 05
+44..47.. minutes?
+dd = 01
+
+- create static class called Useful storing useful and reusable methods
+
+- method returns a string of a formatted date
+- takes in the date to format
+- takes in a string of the desired formatPattern
+private static String formatDate(Date dateToFormat, String formatPattern)
+
+
+----
+
+- method instantiates everything needed to get dates and calendars up and running
+- method that refreshes the date just in case its almost midnight
+
+----
+method for saving binary info between sessions, saved maybe after a file is printed or something
+- saves transactionNum for future use
+
+method for loading binary info between sessions, called as soon as program begins
+- loads transactionNum from a binary file, otherwise sets it to 1 if no file exists

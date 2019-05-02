@@ -2,28 +2,26 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 
+import carlos_package.U;
+
 //driver class
 public class SalesSP19Report_Valeriano {
 
 	private static Scanner kbd;
 	private static Calendar calendar;
-	private static SimpleDateFormat simpleDateFormat;
-	private static DateFormat dateFormat;
+	private static SimpleDateFormat fullDateFormat;
+	private static SimpleDateFormat dayFormat;
 	private static Date currentDate;
-	private static String dateString;
+	private static String fullDateString;
+	private static int currentDay;
 	private static ProductSP19_Valeriano instance;
-	private static int transactionNum = 1;
-	private static int day;
+	private static int transactionNum; //TODO save and load in a binary file
 	
-	//getting errors here, must debug to fix them
+	
 	public static void main(String[] args) {
 	    calendar = Calendar.getInstance();
-	    currentDate = new Date(); //instantiate Date object with no args.. sets to current date
-	    calendar.setTime(currentDate); //calendar needs a date object to set time
-		simpleDateFormat = new SimpleDateFormat("dd");
-		dateFormat = DateFormat.getInstance();
-		dateString = dateFormat.format(currentDate); //DateFormat.format(date) returns a string
-		
+		fullDateFormat = new SimpleDateFormat();
+		dayFormat = new SimpleDateFormat("dd");
 		kbd = new Scanner(System.in);
 		menuLoop();
 	}
@@ -34,7 +32,7 @@ public class SalesSP19Report_Valeriano {
 		int input;
 		do
 		{
-			day = Integer.parseInt(simpleDateFormat.format(currentDate));
+			refreshDate();
 			displayMenu();
 			input = kbd.nextInt();
 			switch(input)
@@ -58,6 +56,14 @@ public class SalesSP19Report_Valeriano {
 		while (input != 0);
 	}
 
+	//refreshes and initializes the date
+	private static void refreshDate() {
+		currentDate = new Date(); //instantiate Date object with no args.. sets to current date at the very moment
+		fullDateString = fullDateFormat.format(currentDate); //DateFormat.format(date) returns a string representing the date
+		calendar.setTime(currentDate); //calendar needs a date object to set time
+		currentDay = Integer.parseInt(dayFormat.format(currentDate));
+	}
+
 	private static void displayMenu() {
 		print("SALE SPRING 2019 PRODUCTS--Carlos Valeriano");
 		print("Today: " + currentDate);
@@ -77,80 +83,44 @@ public class SalesSP19Report_Valeriano {
 	{
 		int sp191, sp192, sp193;
 		float amountPaid;
-		String transactionString;
 		String fileName;
 		
-		if (day != Integer.parseInt(simpleDateFormat.format(currentDate)))
+		
+		if (currentDay != Integer.parseInt(dayFormat.format(currentDate)))
 		{
-			day = Integer.parseInt(simpleDateFormat.format(currentDate));
+			currentDay = Integer.parseInt(dayFormat.format(currentDate));
 			transactionNum = 1;
 		}
+		
+		String dayString;
+		if (currentDay < 10) { dayString = "0" + currentDay; }
+		else { dayString = "" + currentDay; }
 
 		print("-- Sale Product Transaction --");
 		print("How many SP191 units were bought?");
-		sp191 = inputStringAndConvertToInt();
+		sp191 = U.inputStringAndConvertToInt();
 		print("How many SP192 units were bought?");
-		sp192 = inputStringAndConvertToInt();
+		sp192 = U.inputStringAndConvertToInt();
 		print("How many SP193 units were bought?");
-		sp193 = inputStringAndConvertToInt();
+		sp193 = U.inputStringAndConvertToInt();
 		print("How much did the customer pay?");
-		amountPaid = inputStringAndConvertToFloat();
+		amountPaid = U.inputStringAndConvertToFloat();
+		
 		
 		instance = new ProductSP19_Valeriano(sp191, sp192, sp193);
-		transactionString = String.format("%d%04d", day, transactionNum);
-		instance.printReceipt(dateString, transactionString, amountPaid);
+		String transactionString = String.format("%s%04d", dayString, transactionNum);
+		instance.printReceipt(fullDateString, transactionString, amountPaid);
 		
-		SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyymmdd");
-		fileName = "DaySale_" + fileDateFormat.format(currentDate) + ".txt";
-		instance.outputToDayFile(fileName, transactionString);
+		
+		fileName = "DaySale_" + U.formatDate(currentDate, "yyyyMMdd") + ".txt";
+		String lineToAppend = String.format("%s   %d   %d   %d", transactionString, sp191, sp192, sp193);
+		U.appendLineToFile(lineToAppend, fileName);
 		
 		transactionNum++;
 	}
 
-	//keep taking user input until it successfully converts to an int
-	private static int inputStringAndConvertToInt() {
-		boolean success = false;
-		int output = 0;
-		String input;
-		do
-		{
-			input = kbd.nextLine();
-			try {
-			output = Integer.parseInt(input);
-			success = true;
-			}
-			catch (NumberFormatException e)
-			{
-				success = false;
-				print("Input not a number please try again.");
-			}
-		}
-		while (!success);
-		return output;
-	}
 	
-	//similar to previous method but converts to a float instead
-	private static float inputStringAndConvertToFloat()
-	{
-		boolean success = false;
-		float output = 0;
-		String input;
-		do
-		{
-			input = kbd.nextLine();
-			try {
-			output = Float.parseFloat(input);
-			success = true;
-			}
-			catch (NumberFormatException e)
-			{
-				success = false;
-				print("Input not a number please try again.");
-			}
-		}
-		while (!success);
-		return output;
-	}
+	
 
 	
 	
