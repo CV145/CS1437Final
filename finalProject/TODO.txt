@@ -36,3 +36,6 @@ fileDirectory = file.getPath();
 - project needs to save between uses and probably have a "factory reset" button
 ... specifically the transactionNum which keeps setting back to 1 when starting over
 factory reset would delete the binary files
+
+
+

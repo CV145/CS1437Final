@@ -34,7 +34,7 @@ public class SalesSP19Report_Valeriano {
 		{
 			refreshDate();
 			displayMenu();
-			input = kbd.nextInt();
+			input = U.inputStringAndConvertToInt();
 			switch(input)
 			{
 			case 1:
@@ -120,20 +120,29 @@ public class SalesSP19Report_Valeriano {
 	}
 
 	
-	
-
-	
-	
+	//gets info from day file, adds it to month file
+	//display day info
 	private static void endingDayReport()
 	{
-		
+		U.println("Please input the day to run the report for in the following format: mm/dd/yyyy");
+		String chosenDay; //TODO check if this string is a valid date, probably SimpleDateFormat has something for this
+		chosenDay = kbd.nextLine();
+		if (chosenDay.matches("(.*)mm/dd/yy(.*)"))
+		{
+			U.println("string matches");
+		}
+		else { U.println("string doesn't match mm/dd/yyyy format"); }
+		U.println("string input was " + chosenDay);
 	}
 	
+	//gets info from month file, adds it to year file
+	//display month info
 	private static void endingMonthReport()
 	{
 		
 	}
 	
+	//display year info
 	private static void endingYearReport()
 	{
 		

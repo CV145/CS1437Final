@@ -38,3 +38,7 @@ method for saving binary info between sessions, saved maybe after a file is prin
 
 method for loading binary info between sessions, called as soon as program begins
 - loads transactionNum from a binary file, otherwise sets it to 1 if no file exists
+
+
+
+
