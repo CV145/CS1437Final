@@ -30,7 +30,7 @@ fileDirectory = file.getPath();
 - figure out why date is not displaying fully
  format on need to know basis... sometimes will need full date so no arg constructor, other times just need dat so "dd" constructor
 
-
+----------------------------------
 
 
 - project needs to save between uses and probably have a "factory reset" button

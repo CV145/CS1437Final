@@ -40,5 +40,38 @@ method for loading binary info between sessions, called as soon as program begin
 - loads transactionNum from a binary file, otherwise sets it to 1 if no file exists
 
 
+--------
+TODO - ask users what day to run a report in using a specified format
 
+- method takes in a string, a required format pattern, and a returns a bool that indicates the string is in the specified format (formats could be mm/dd/yyyy, mm/yyyy, or yyyy)
+
+public static boolean CheckIfStringIsInFormat(String input, String formatPattern)
+{
+//format pattern... ".*/.*"
+ return Pattern.matches(formatPattern, input);
+}
+
+- if the above method returns true, depending on which report is being run, tokenize the string into mm, dd, yyyy
+
+String fileName = "daySale_" + yyyy + mm + dd + ".txt";
+
+- look for a file with that name. If no file like that exists, log error: "No file under the name: " + fileName + ", was found. Please make sure the inputted date is in the requested format (ex: 04/23/2013) and that a transaction actually occured on that date."
+- if the file exists, open it up for reading and put it in a scanner. Call TokenizeLine(). Add up $ of units sold. Close the file.
+
+
+
+StringTokenizer class to split apart string input and check if it matches mm/dd/yyyy
+
+To do this, maybe split input looking for 2 "/" delimiters, if exactly 2 are found then success?
+34234/2343/23 != mm/dd/yyyy
+re/df/wer2 
+
+
+int tokens = 0;
+StringTokenizer tokenizeDate = new StringTokenizer("mm/dd/yyyy", "/");
+while (tokenizeDate.hasMoreTokens())
+{
+ tokens++;
+ tokenizeDate.nextToken() 
+}
 
