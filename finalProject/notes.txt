@@ -9,4 +9,18 @@ String text = "This is the text to search";
 
 boolean matches = Pattern.matches(pattern, text);
 
-The pattern string checks for occurences of "is" inside the text. The .* means it allows for zero or more characters before and after is. I'm betting .2 changes that to two or less?
+The pattern string checks for occurences of "is" inside the text. The .* means it allows for zero or more characters before and after is. 
+
+----
+Regular Expressions in Java
+
+"00-00" 
+"\\d{2}-\\d{2}"
+
+\d represents a digit
+\\ represents a "\" backslash
+Greedy quantifier...
+X{n} represents X, exactly n times
+
+"mm/dd/yyyy"
+"\\d{2}/\\d{2}/\\d{4}"

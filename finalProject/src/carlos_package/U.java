@@ -8,8 +8,10 @@ import java.io.PrintWriter;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.regex.*;
 
 //class containing useful and reusable static methods
+//helps keep the other classes clean and focused
 public class U {
 
 	    //prints a line
@@ -120,5 +122,12 @@ public class U {
 			}
 			while (!success);
 			return output;
+		}
+		
+		//method checks if a string matches a pattern
+		public static boolean CheckIfStringIsInFormat(String input, String regularExpressionPattern)
+		{
+		//format pattern... ".*/.*"  is a regular expression
+		 return Pattern.matches(regularExpressionPattern, input);
 		}
 }

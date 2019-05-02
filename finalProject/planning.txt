@@ -43,13 +43,16 @@ method for loading binary info between sessions, called as soon as program begin
 --------
 TODO - ask users what day to run a report in using a specified format
 
-- method takes in a string, a required format pattern, and a returns a bool that indicates the string is in the specified format (formats could be mm/dd/yyyy, mm/yyyy, or yyyy)
+- method takes in a string, a required format pattern, and a returns a bool that indicates the string is in the specified format (format patterns could be mm/dd/yyyy, mm/yyyy, or yyyy) 
+
+
 
 public static boolean CheckIfStringIsInFormat(String input, String formatPattern)
 {
 //format pattern... ".*/.*"
  return Pattern.matches(formatPattern, input);
 }
+
 
 - if the above method returns true, depending on which report is being run, tokenize the string into mm, dd, yyyy
 

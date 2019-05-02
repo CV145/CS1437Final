@@ -125,14 +125,18 @@ public class SalesSP19Report_Valeriano {
 	private static void endingDayReport()
 	{
 		U.println("Please input the day to run the report for in the following format: mm/dd/yyyy");
-		String chosenDay; //TODO check if this string is a valid date, probably SimpleDateFormat has something for this
-		chosenDay = kbd.nextLine();
-		if (chosenDay.matches("(.*)mm/dd/yy(.*)"))
+		
+		
+		String chosenDay = kbd.nextLine();
+		//String is checked using a regular expression
+		if (U.CheckIfStringIsInFormat(chosenDay, "\\d{2}/\\d{2}/\\d{4}"))
 		{
-			U.println("string matches");
+			U.println("it works!");
 		}
-		else { U.println("string doesn't match mm/dd/yyyy format"); }
-		U.println("string input was " + chosenDay);
+		else
+		{
+			U.println("Please specify the desired day in mm/dd/yyyy format");
+		}
 	}
 	
 	//gets info from month file, adds it to year file
