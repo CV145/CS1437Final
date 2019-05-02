@@ -1,0 +1,12 @@
+import java.util.regex.Pattern;
+
+Pattern class
+Pattern.matches(String, String);
+- returns whether a string matches a pattern
+
+String pattern = ".*is.*";
+String text = "This is the text to search";
+
+boolean matches = Pattern.matches(pattern, text);
+
+The pattern string checks for occurences of "is" inside the text. The .* means it allows for zero or more characters before and after is. I'm betting .2 changes that to two or less?
