@@ -54,7 +54,7 @@ public class ProductSP19_Valeriano {
 	//Method for displaying report
 	public void displayReport(String date)
 	{
-		System.out.printf("%6s%s\n", "SALE SP19 PRODUCTS-", date);
+		System.out.printf("\n%6s%s\n", "SALE SP19 PRODUCTS-", date);
 		
 		System.out.printf("%s   %d   %.2f\n", "Model SP191 (12.99/per unit)", _191UnitsSold, Calculate191Earnings());
 		
@@ -66,9 +66,9 @@ public class ProductSP19_Valeriano {
 		U.println("Sub total:");
 		System.out.printf("%45.2f\n", CalculateSubTotal());
 		U.println("Tax(8.25%)");
-		System.out.printf("%45.2f", CalculateTax());
+		System.out.printf("%45.2f\n", CalculateTax());
 		U.println("Total:");
-		System.out.printf("%45.2f", CalculateTotal());
+		System.out.printf("%45.2f\n", CalculateTotal());
 	}
 
 	

@@ -177,9 +177,11 @@ public class SalesSP19Report_Valeriano {
 				
 				String line = String.format("%s    %d    %d    %d", dd, total191, total192, total193); 
 				String monthFileName = String.format("monthSale_%s%s.txt", yyyy, mm);
+				instance = new ProductSP19_Valeriano(total191, total192, total193);
+				instance.displayReport(chosenDay); 
 				 try { U.appendLineToFile(line, monthFileName); }
 				 catch (IOException io) { U.println("there was an issue appending to " + monthFileName); }
-				 repeatLoop = false;
+				 repeatLoop = false; 
 			}
 			else
 			{
@@ -187,7 +189,7 @@ public class SalesSP19Report_Valeriano {
 				continue;
 			}
 		}
-		while (repeatLoop = true);
+		while (repeatLoop);
 	}
 	
 	//gets info from month file, adds it to year file
