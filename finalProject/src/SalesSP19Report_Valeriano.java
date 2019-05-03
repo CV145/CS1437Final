@@ -1,6 +1,6 @@
 import java.util.*;
 import java.text.SimpleDateFormat;
-import java.text.DateFormat;
+import java.io.*;
 
 import carlos_package.U;
 
@@ -65,6 +65,7 @@ public class SalesSP19Report_Valeriano {
 	}
 
 	private static void displayMenu() {
+		U.println("");
 		print("SALE SPRING 2019 PRODUCTS--Carlos Valeriano");
 		print("Today: " + currentDate);
 		print("1. Sale Product");
@@ -112,9 +113,10 @@ public class SalesSP19Report_Valeriano {
 		instance.printReceipt(fullDateString, transactionString, amountPaid);
 		
 		
-		fileName = "DaySale_" + U.formatDate(currentDate, "yyyyMMdd") + ".txt";
+		fileName = "daySale_" + U.formatDate(currentDate, "yyyyMMdd") + ".txt";
 		String lineToAppend = String.format("%s   %d   %d   %d", transactionString, sp191, sp192, sp193);
-		U.appendLineToFile(lineToAppend, fileName);
+		try { U.appendLineToFile(lineToAppend, fileName); }
+		catch (IOException io) { U.println("the file: " + fileName + " threw an IOException"); }
 		
 		transactionNum++;
 	}
@@ -124,19 +126,68 @@ public class SalesSP19Report_Valeriano {
 	//display day info
 	private static void endingDayReport()
 	{
-		U.println("Please input the day to run the report for in the following format: mm/dd/yyyy");
-		
-		
-		String chosenDay = kbd.nextLine();
-		//String is checked using a regular expression
-		if (U.CheckIfStringIsInFormat(chosenDay, "\\d{2}/\\d{2}/\\d{4}"))
+		Scanner fileScanner;
+		boolean repeatLoop = true;
+		do
 		{
-			U.println("it works!");
+			U.println("Please input the day to run the report for in the following format: mm/dd/yyyy");
+			String chosenDay = kbd.nextLine();
+			//String is checked using a regular expression
+			if (U.CheckIfStringIsInFormat(chosenDay, "\\d{2}/\\d{2}/\\d{4}"))
+			{
+				String mm, dd, yyyy;
+				ArrayList<String> splitDate = U.tokenizeString(chosenDay, "/");
+				mm = splitDate.get(0); dd = splitDate.get(1); yyyy = splitDate.get(2); 
+				String fileName = "daySale_" + yyyy + mm + dd + ".txt";
+				try { fileScanner = U.getScannerForFile(fileName); }
+				catch (FileNotFoundException f)
+				{
+					U.println("No file called " + fileName + " was found. Please make sure the requested date was inputted as all numbers in the following format: mm/dd/yyyy and try again"); continue;
+				}
+				catch (IOException io) { U.println("IO exception occured"); continue; }
+				
+				
+				ArrayList<Integer> sp191Sum = new ArrayList<Integer>();
+				ArrayList<Integer> sp192Sum = new ArrayList<Integer>();
+				ArrayList<Integer> sp193Sum = new ArrayList<Integer>();
+				
+				//for each line in the scanner, return a string
+				while (fileScanner.hasNextLine())
+				{
+					ArrayList<String> line = U.tokenizeString(fileScanner.nextLine(), null); //note, null was passed in with intention of setting delimiters as empty spaces
+					sp191Sum.add(Integer.parseInt(line.get(1)));
+					sp192Sum.add(Integer.parseInt(line.get(2)));
+					sp193Sum.add(Integer.parseInt(line.get(3)));
+				}
+				
+				//each sum needs to be added up for a final sum
+				int total191 = 0, total192 = 0, total193 = 0;
+				for (Integer integer : sp191Sum)
+				{
+					total191 += integer;
+				}
+				for (Integer integer : sp192Sum)
+				{
+					total192 += integer;
+				}
+				for (Integer integer : sp193Sum)
+				{
+					total193 += integer;
+				}
+				
+				String line = String.format("%s    %d    %d    %d", dd, total191, total192, total193); 
+				String monthFileName = String.format("monthSale_%s%s.txt", yyyy, mm);
+				 try { U.appendLineToFile(line, monthFileName); }
+				 catch (IOException io) { U.println("there was an issue appending to " + monthFileName); }
+				 repeatLoop = false;
+			}
+			else
+			{
+				U.println("Please specify the desired day in mm/dd/yyyy format");
+				continue;
+			}
 		}
-		else
-		{
-			U.println("Please specify the desired day in mm/dd/yyyy format");
-		}
+		while (repeatLoop = true);
 	}
 	
 	//gets info from month file, adds it to year file

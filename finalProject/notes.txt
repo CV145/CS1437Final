@@ -24,3 +24,19 @@ X{n} represents X, exactly n times
 
 "mm/dd/yyyy"
 "\\d{2}/\\d{2}/\\d{4}"
+
+-----
+StringTokenizer class to split apart string input and check if it matches mm/dd/yyyy
+
+To do this, maybe split input looking for 2 "/" delimiters, if exactly 2 are found then success?
+34234/2343/23 != mm/dd/yyyy
+re/df/wer2 
+
+
+int tokens = 0;
+StringTokenizer tokenizeDate = new StringTokenizer("mm/dd/yyyy", "/");
+while (tokenizeDate.hasMoreTokens())
+{
+ tokens++;
+ tokenizeDate.nextToken() 
+}

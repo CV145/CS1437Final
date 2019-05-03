@@ -46,7 +46,6 @@ TODO - ask users what day to run a report in using a specified format
 - method takes in a string, a required format pattern, and a returns a bool that indicates the string is in the specified format (format patterns could be mm/dd/yyyy, mm/yyyy, or yyyy) 
 
 
-
 public static boolean CheckIfStringIsInFormat(String input, String formatPattern)
 {
 //format pattern... ".*/.*"
@@ -54,27 +53,49 @@ public static boolean CheckIfStringIsInFormat(String input, String formatPattern
 }
 
 
-- if the above method returns true, depending on which report is being run, tokenize the string into mm, dd, yyyy
+- if the above method returns true, depending on which report is being run, tokenize the string (chosenDay) into mm, dd, yyyy
+
+String mm, dd, yyyy;
+
+public static String[] tokenizeString(String stringToTokenize, String delimiter)
+{
+ StringTokenizer tokenizer = new StringTokenizer(stringToTokenize, delimiter);
+ ArrayList<String> tokens = new ArrayList<String>();
+ while (tokenizer.hasMoreTokens())
+ {
+  tokens.add(tokenizer.nextToken());
+ }
+ return tokens;
+}
+
 
 String fileName = "daySale_" + yyyy + mm + dd + ".txt";
 
 - look for a file with that name. If no file like that exists, log error: "No file under the name: " + fileName + ", was found. Please make sure the inputted date is in the requested format (ex: 04/23/2013) and that a transaction actually occured on that date."
-- if the file exists, open it up for reading and put it in a scanner. Call TokenizeLine(). Add up $ of units sold. Close the file.
 
-
-
-StringTokenizer class to split apart string input and check if it matches mm/dd/yyyy
-
-To do this, maybe split input looking for 2 "/" delimiters, if exactly 2 are found then success?
-34234/2343/23 != mm/dd/yyyy
-re/df/wer2 
-
-
-int tokens = 0;
-StringTokenizer tokenizeDate = new StringTokenizer("mm/dd/yyyy", "/");
-while (tokenizeDate.hasMoreTokens())
+public static Scanner getScannerForFile(String fileName) throws IOException
 {
- tokens++;
- tokenizeDate.nextToken() 
+FileReader fileToOpen = null;
+
+			try { fileToOpen = new FileReader(fileName); }
+			catch(IOException io) { U.println("no file under the name: " + fileName + " was found. Please make sure the inputted date is in the requested format (ex: 04/12/2013) and that a transaction actually occured on that date."); } //currently opening file for writing to month file
+			
+			return new Scanner(fileToOpen);
 }
+
+- if the file exists, open it up for reading and put it in a scanner. Call TokenizeString() for each line in the file. Add up # of units sold.
+- indeces 1, 2, 3 need to be converted to ints and stored in three seperate Integer array lists: SP191total, SP192total, and SP193total
+
+afterwards add up each of these array lists and return the sum for each product
+
+use String.format to create the line to write to the month file
+
+create a new month file if it doesn't exist already, otherwise add to it
+
+write the line to the month file, grabbing the requested day and the totals for each product
+
+ Close the file.
+
+
+
 

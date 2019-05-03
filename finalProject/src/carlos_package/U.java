@@ -1,13 +1,12 @@
 package carlos_package;
 
 import java.awt.Desktop;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 import java.util.regex.*;
 
 //class containing useful and reusable static methods
@@ -21,7 +20,7 @@ public class U {
 		}
 		
 		//method writes a line to a file
-		public static void appendLineToFile(String lineToAppend, String fileName)
+		public static void appendLineToFile(String lineToAppend, String fileName) throws IOException
 		{
 			File file = new File(fileName); //create an instance of File class
 			FileWriter fileWriter = null;
@@ -29,8 +28,7 @@ public class U {
 			
 			if (!file.exists())
 			{
-				try { file.createNewFile(); }
-				catch (IOException e) { U.println("there was an error creating the file: " + fileName + " \n " + "maybe it already exists?"); }
+				file.createNewFile(); 
 			}
 			
 			try { fileWriter = new FileWriter(file, true); } //append to file
@@ -41,7 +39,7 @@ public class U {
 			printWriter = new PrintWriter(fileWriter);
 			printWriter.println(lineToAppend);
 			
-			openFileOnDesktop(file);
+			try { openFileOnDesktop(file); } catch (IOException io) { println("issue opening on desktop"); }
 
 			outputFileDirectory(file);
 			
@@ -50,17 +48,17 @@ public class U {
 		}
 
 		//method tries to automatically open a file
-		public static void openFileOnDesktop(File file) {
+		public static void openFileOnDesktop(File file) throws IOException {
 			Desktop desktop;
 			if (!Desktop.isDesktopSupported())
 			{ U.println("Desktop class not supported"); }
 			else  
 			{ 
 				desktop = Desktop.getDesktop();
-				  if (file.exists()) { try {desktop.open(file);} catch(IOException e) { U.println("unable to open file using Desktop class"); }
+				  if (file.exists()) { desktop.open(file); }
+				  else { println(file.getName() + " file does not exist"); }
 				}
 			}
-		}
 
 		//look for and print the directory of where a file is located
 		public static void outputFileDirectory(File file) {
@@ -130,4 +128,33 @@ public class U {
 		//format pattern... ".*/.*"  is a regular expression
 		 return Pattern.matches(regularExpressionPattern, input);
 		}
+		
+		//tokenizes a string and returns an array list of tokens
+		public static ArrayList<String> tokenizeString(String stringToTokenize, String delimiter)
+		{
+		 StringTokenizer tokenizer;
+		 if (delimiter != null)
+		 {
+		 tokenizer = new StringTokenizer(stringToTokenize, delimiter); 
+		 }
+		 else
+		 {
+			 tokenizer = new StringTokenizer(stringToTokenize); //in case null was passed in
+		 }
+		 
+		 ArrayList<String> tokens = new ArrayList<String>();
+		 while (tokenizer.hasMoreTokens())
+		 {
+		  tokens.add(tokenizer.nextToken());
+		 }
+		 return tokens;
+		}
+		
+		//gets a scanner for an inputted file name, which is searched for 
+		public static Scanner getScannerForFile(String fileName) throws FileNotFoundException, IOException
+		{
+			FileReader fileToOpen = new FileReader(fileName); 	
+			return new Scanner(fileToOpen);
+		}
+
 }
