@@ -11,7 +11,7 @@ import java.util.regex.*;
 
 //class containing useful and reusable static methods
 //helps keep the other classes clean and focused
-public class U {
+public class Valeriano {
 
 	    //prints a line
 		public static void println(String output)
@@ -32,7 +32,7 @@ public class U {
 			}
 			
 			try { fileWriter = new FileWriter(file, true); } //append to file
-			catch(IOException e) { U.println("there was an error creating a FileWriter for " + file.getName()); }
+			catch(IOException e) { Valeriano.println("there was an error creating a FileWriter for " + file.getName()); }
 			
 			//PrintWriter(FileWriter) works because FileWriter inherits OutputStreamWriter
 			//PrintWriter needs an OutputStream class to write to
@@ -51,7 +51,7 @@ public class U {
 		public static void openFileOnDesktop(File file) throws IOException {
 			Desktop desktop;
 			if (!Desktop.isDesktopSupported())
-			{ U.println("Desktop class not supported"); }
+			{ Valeriano.println("Desktop class not supported"); }
 			else  
 			{ 
 				desktop = Desktop.getDesktop();
@@ -64,7 +64,7 @@ public class U {
 		public static void outputFileDirectory(File file) {
 			String fileDirectory;
 			fileDirectory = file.getAbsolutePath();
-			if (fileDirectory != null) { U.println("\n" + "The directory for the file is: " + fileDirectory + "\n"); }
+			if (fileDirectory != null) { Valeriano.println("\n" + "The directory for the file is: " + fileDirectory + "\n"); }
 		}
 
 		//method returns a string of a formatted date

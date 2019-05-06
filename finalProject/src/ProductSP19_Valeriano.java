@@ -1,4 +1,3 @@
-import carlos_package.U;
 
 //data type class
 public class ProductSP19_Valeriano {
@@ -62,12 +61,12 @@ public class ProductSP19_Valeriano {
 		
 		System.out.printf("%s   %d   %.2f\n\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
 		
-		U.println(".............................................");
-		U.println("Sub total:");
+		println(".............................................");
+		println("Sub total:");
 		System.out.printf("%45.2f\n", CalculateSubTotal());
-		U.println("Tax(8.25%)");
+		println("Tax(8.25%)");
 		System.out.printf("%45.2f\n", CalculateTax());
-		U.println("Total:");
+		println("Total:");
 		System.out.printf("%45.2f\n", CalculateTotal());
 	}
 
@@ -75,29 +74,34 @@ public class ProductSP19_Valeriano {
 	//Method prints out a receipt
 	public void printReceipt(String currentDate, String transactionNum, float amountPaid)
 	{
-		U.println(".............................................");
+		println(".............................................");
 		System.out.printf("%7s\n", "RECEIPT - SALE SP19 PRODUCT");
-		U.println(".............................................");
-		U.println("Date:");
+		println(".............................................");
+		println("Date:");
 		System.out.printf("%45s\n", currentDate);
-		U.println("Sale transaction:");
+		println("Sale transaction:");
 		System.out.printf("%45s\n", transactionNum);
-		U.println(".............................................");
+		println(".............................................");
 		System.out.printf("%s %5s %10s\n", "Model SP191 (12.99/per unit)", _191UnitsSold, Calculate191Earnings());
 		System.out.printf("%s %5s %10s\n", "Model SP192 (14.99/per unit)", _192UnitsSold, Calculate192Earnings());
 		System.out.printf("%s %5s %10s\n", "Model SP193 (15.99/per unit)", _193UnitsSold, Calculate193Earnings());
-		U.println(".............................................");
-		U.println("Sub total:");
+		println(".............................................");
+		println("Sub total:");
 		System.out.printf("%45.2f\n", CalculateSubTotal());
-		U.println("Tax(8.25%)");
+		println("Tax(8.25%)");
 		System.out.printf("%45.2f\n", CalculateTax());
-		U.println("Total:");
+		println("Total:");
 		System.out.printf("%45.2f\n", CalculateTotal());
-		U.println("Amount paid:");
+		println("Amount paid:");
 		System.out.printf("%45.2f\n", amountPaid);
-		U.println("Balance:");
+		println("Balance:");
 		System.out.printf("%45.2f\n", CalculateBalance(amountPaid));
 	}
 	
+	//prints a line
+		public static void println(String output)
+		{
+			System.out.println(output);
+		}
 	
 }
